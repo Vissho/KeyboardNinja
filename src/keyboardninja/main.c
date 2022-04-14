@@ -1,7 +1,9 @@
-#include <stdio.h>
+#include "kbn_print_banner.h"
 
 int main()
 {
-	printf("keyboardninja\n");
-	return 0;
+    print_banner();
+    int a, b;
+    learn_settings(&a, &b);
+    return 0;
 }
