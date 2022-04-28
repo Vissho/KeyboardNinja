@@ -3,12 +3,12 @@
 
 int main()
 {
-    int cnt, i;
-    //double time;
+    int cnt;
+    double time;
     char** dict = read_dictionary(&cnt);
-    printf("keyboardninja %d\n", cnt);
-    for(i = 0; i < cnt; i++){
-        printf("%s", dict[i]);
-    }
+    printf("keyboardninja\n");
+    char* spec_string = find_string(dict, 2, 1, cnt);
+    char* user_str = user_string(&time, spec_string);
+    printf("%s - %.2lf\n", user_str, time);
 	return 0;
 }
