@@ -81,8 +81,8 @@ int learn_coml()
         scanf(" %c", &p);
         if (isdigit(p)) {
             c = p - '0';
-            if (c != 1 && c != 2) {
-                printf("[E] Введен неизвестный язык! Повтор ввода");
+            if (c != 1 && c != 2 && c != 3) {
+                printf("[E] Введен неизвестная сложность! Повтор ввода");
                 continue;
             } else
                 return c;
