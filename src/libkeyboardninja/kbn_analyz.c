@@ -41,9 +41,11 @@ int* analyz(char* spec_string, char* user_string, int* size)
     return analyz;
 }
 
-float symbols_in_min(char* user_str, float time)
+float symbols_in_min(char* user_str, float time, int lang)
 {
-    int len = sizeof(user_str);
+    int len = strlen(user_str);
+    if (lang == 1)
+        len /= 2;
     float sim = (len * 60) / time;
     return sim;
 }
@@ -72,4 +74,75 @@ void print_rate(float sym_in_min)
         printf("Робот\n");
     else if (sym_in_min > 500)
         printf("КИБЕРПСИХ\n");
+}
+
+int correct_len(char* ss, char* us)
+{
+    size_t ss_len = strlen(ss);
+    size_t us_len = strlen(us);
+    if (ss_len < us_len)
+        return -1;
+    else if (ss_len == us_len)
+        return 0;
+    else
+        return 2;
+}
+
+int correct_str(int* arr, size_t len)
+{
+    for (size_t x = 0; x < len; x++)
+        if (arr[x] != 1) {
+            return 0;
+        }
+    return 1;
+}
+
+void incorrect_output(char* user_str, int* analyz_print, int cnt)
+{
+    printf("\033[1;31m");
+    printf("\n\t***Строка была введена неверно!***\n\tОшибки "
+           "представлены "
+           "ниже\n");
+    printf("\033[1;37m");
+    for (int i = 0; i < cnt - 1; i++) {
+        if (analyz_print[i] == 1) {
+            if (user_str[i] == -48 || user_str[i] == -47) {
+                printf("\033[32m");
+                printf("%c", user_str[i]);
+                i++;
+                printf("%c", user_str[i]);
+            } else {
+                printf("\033[32m%c", user_str[i]);
+            }
+        } else {
+            if (user_str[i] == -48 || user_str[i] == -47) {
+                printf("\033[31m");
+                printf("%c", user_str[i]);
+                i++;
+                printf("%c", user_str[i]);
+            } else {
+                printf("\033[31m%c", user_str[i]);
+            }
+        }
+    }
+}
+
+void correct_output(double time, char* user_str, int lang)
+{
+    printf("\033[1;32m");
+    printf("\n\t***Строка была введена верно***\nАнализ представлен  "
+           "ниже\n");
+    printf("Время, за которое была введена строка: %0.2f\n", time);
+    float sym_in_min = symbols_in_min(user_str, time, lang);
+    printf("Скорость набора : %.2f(сим/сек)\n", sym_in_min);
+    printf("Ранг - ");
+    print_rate(sym_in_min);
+}
+
+void print_less_cnt_sym()
+{
+    printf("\033[31m");
+    printf("\n\tОбнаружена ошибка!\nВведено меньше символов, чем в требуемой "
+           "строке\n");
+    printf("\033[37m");
 }

@@ -65,7 +65,7 @@ char* find_string(char** dict, int language, int complexity, int cnt)
 
 char* user_string(double* time, char* spec_string)
 {
-    int timercnt = 5;
+    int timercnt = 2;
     printf("\n%s", spec_string);
     printf("\033[33m\n");
     printf("\nНапиши строку выше через\n");
