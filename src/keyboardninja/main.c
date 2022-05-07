@@ -8,10 +8,10 @@ int main()
 {
     int true_flag = 1, lenflag;
     int lang, coml;
-    int cnt;
+    int cnt = 300;
     double time;
 
-    char** dict = read_dictionary(&cnt);
+    char** dict = read_dictionary(cnt);
 
     print_banner();
     learn_settings(&lang, &coml);
@@ -22,18 +22,17 @@ int main()
 
     size_t len = strlen(spec_string) - 1;
     true_flag = correct_str(analyz_print, len);
-    lenflag = correct_len(user_str, spec_string);
+    lenflag = correct_len(spec_string, user_str, lang);
 
     if (true_flag == 1 && lenflag == 0) {
         correct_output(time, user_str, lang);
     } else {
         if (lenflag == -1) {
             print_less_cnt_sym();
-        } else if (lenflag == 0) {
+        } else if (lenflag == 0 || lenflag == 1) {
             incorrect_output(user_str, analyz_print, cnt - 1);
         }
     }
     printf("\033[37m");
     printf("\n");
-    return 0;
 }

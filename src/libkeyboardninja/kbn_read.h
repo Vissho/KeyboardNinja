@@ -1,9 +1,9 @@
 #ifndef _KBN_READ_
 #define _KBN_READ_
 
-#define SIZE_STR 150
+#define SIZE_STR 500
 
-char** read_dictionary(int* cnt);
+char** read_dictionary(int cnt);
 char* find_string(char** dict, int language, int complexity, int cnt);
 char* user_string(double* time, char* spec_string);
 

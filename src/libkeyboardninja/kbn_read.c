@@ -18,20 +18,27 @@ int getrand(int min, int max)
     return (double)rand() / (RAND_MAX + 1.0) * (max - min) + min;
 }
 
-char** read_dictionary(int* cnt)
+int read_cnt()
+{
+    int cnt = 0;
+    FILE* fp;
+    fp = fopen("dictionary.txt", "r");
+    while (!feof(fp)) {
+        fscanf(fp, "%*[^\n]%*c");
+        cnt++;
+    }
+    fclose(fp);
+    return cnt;
+}
+
+char** read_dictionary(int cnt)
 {
     int i;
-    *cnt = -1;
     FILE* fp;
     fp = fopen("dictionary.txt", "r");
 
-    while (!feof(fp)) {
-        fscanf(fp, "%*[^\n]%*c");
-        (*cnt)++;
-    }
-
-    char** dict = (char**)malloc((*cnt) * sizeof(char*));
-    for (i = 0; i < *cnt; i++) {
+    char** dict = (char**)malloc(cnt * sizeof(char*));
+    for (i = 0; i < cnt; i++) {
         dict[i] = (char*)malloc(SIZE_STR * sizeof(char));
     }
 
@@ -48,7 +55,7 @@ char** read_dictionary(int* cnt)
 
 char* find_string(char** dict, int language, int complexity, int cnt)
 {
-    int start, end;
+    int start = 0, end = 0;
 
     if (language == 1) {
         start = cnt / 6 * (language * (complexity - 1));
