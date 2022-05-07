@@ -6,7 +6,7 @@
 
 int main()
 {
-    int true_flag = 1, lenflag;
+    int true_flag = 1;
     int lang, coml;
     int cnt = 300;
     double time;
@@ -22,16 +22,11 @@ int main()
 
     size_t len = strlen(spec_string) - 1;
     true_flag = correct_str(analyz_print, len);
-    lenflag = correct_len(spec_string, user_str, lang);
 
-    if (true_flag == 1 && lenflag == 0) {
+    if (true_flag == 1) {
         correct_output(time, user_str, lang);
     } else {
-        if (lenflag == -1) {
-            print_less_cnt_sym();
-        } else if (lenflag == 0 || lenflag == 1) {
-            incorrect_output(user_str, analyz_print, cnt - 1);
-        }
+        incorrect_output(user_str, analyz_print, cnt - 1);
     }
     printf("\033[37m");
     printf("\n");

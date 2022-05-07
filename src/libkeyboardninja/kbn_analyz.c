@@ -76,21 +76,6 @@ void print_rate(float sym_in_min)
         printf("КИБЕРПСИХ\n");
 }
 
-int correct_len(char* ss, char* us, int lang)
-{
-    size_t ss_len = strlen(ss);
-    size_t us_len = strlen(us);
-    if (lang == 1)
-        --us_len;
-    if (ss_len > us_len)
-        return -1;
-    else if (ss_len < us_len)
-        return 1;
-    else if (ss_len == us_len)
-        return 0;
-    return 2;
-}
-
 int correct_str(int* arr, size_t len)
 {
     for (size_t x = 0; x < len; x++)
