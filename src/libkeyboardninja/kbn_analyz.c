@@ -5,11 +5,12 @@
 
 int* analyz(char* spec_string, char* user_string, int* size)
 {
-    int i = 0, cnt = 1;
-    while (user_string[i] != '\0') {
+    int i = 0, user_cnt = strlen(user_string), spec_cnt = 1, cnt = 1;
+    while (spec_string[i] != '\n') {
         i++;
-        cnt++;
+        spec_cnt++;
     }
+    cnt = (user_cnt > spec_cnt) ? user_cnt : spec_cnt;
     int* analyz = (int*)malloc(cnt * sizeof(int));
     i = 0;
     while (spec_string[i] != '\n') {
@@ -85,40 +86,56 @@ int correct_str(int* arr, size_t len)
     return 1;
 }
 
-void incorrect_output(char* user_str, int* analyz_print, int cnt)
+void incorrect_output(char* user_str, char* spec_string, int* analyz_print, int cnt)
 {
     printf("\033[1;31m");
     printf("\n\t***Строка была введена неверно!***\n\tОшибки "
            "представлены "
-           "ниже\n");
+           "ниже\n\n");
     printf("\033[1;37m");
-    for (int i = 0; i < cnt - 1; i++) {
-        if (analyz_print[i] == 1) {
-            if (user_str[i] == -48 || user_str[i] == -47) {
-                printf("\033[32m");
-                printf("%c", user_str[i]);
-                i++;
-                printf("%c", user_str[i]);
-            } else {
-                printf("\033[32m%c", user_str[i]);
-            }
+    int i;
+    for (i = 0; i < cnt - 1; i++) {
+        if (user_str[i] == '\n' && spec_string[i] != '\0') {
+            break;
         } else {
-            if (user_str[i] == -48 || user_str[i] == -47) {
-                printf("\033[31m");
-                printf("%c", user_str[i]);
-                i++;
-                printf("%c", user_str[i]);
+            if (analyz_print[i] == 1) {
+                if (user_str[i] == -48 || user_str[i] == -47) {
+                    printf("\033[32m");
+                    printf("%c", user_str[i]);
+                    i++;
+                    printf("%c", user_str[i]);
+                } else {
+                    printf("\033[32m%c", user_str[i]);
+                }
             } else {
-                printf("\033[31m%c", user_str[i]);
+                if (user_str[i] == -48 || user_str[i] == -47) {
+                    printf("\033[31m");
+                    printf("%c", user_str[i]);
+                    i++;
+                    printf("%c", user_str[i]);
+                } else {
+                    printf("\033[31m%c", user_str[i]);
+                }
             }
         }
+    }
+    while (spec_string[i] != '\0') {
+        if (spec_string[i] == -48 || spec_string[i] == -47) {
+            printf("\033[31m");
+            printf("%c", spec_string[i]);
+            i++;
+            printf("%c", spec_string[i]);
+        } else {
+            printf("\033[31m%c", spec_string[i]);
+        }
+        i++;
     }
 }
 
 void correct_output(double time, char* user_str, int lang)
 {
     printf("\033[1;32m");
-    printf("\n\t***Строка была введена верно***\nАнализ представлен  "
+    printf("\n\t***Строка была введена верно***\n\tАнализ представлен  "
            "ниже\n");
     printf("Время, за которое была введена строка: %0.2f\n", time);
     float sym_in_min = symbols_in_min(user_str, time, lang);

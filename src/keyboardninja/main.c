@@ -26,7 +26,7 @@ int main()
     if (true_flag == 1) {
         correct_output(time, user_str, lang);
     } else {
-        incorrect_output(user_str, analyz_print, cnt - 1);
+        incorrect_output(user_str, spec_string, analyz_print, cnt - 1);
     }
     printf("\033[37m");
     printf("\n");
