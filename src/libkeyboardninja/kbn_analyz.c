@@ -86,7 +86,8 @@ int correct_str(int* arr, size_t len)
     return 1;
 }
 
-void incorrect_output(char* user_str, char* spec_string, int* analyz_print, int cnt)
+void incorrect_output(
+        char* user_str, char* spec_string, int* analyz_print, int cnt)
 {
     printf("\033[1;31m");
     printf("\n\t***Строка была введена неверно!***\n\tОшибки "
@@ -142,12 +143,4 @@ void correct_output(double time, char* user_str, int lang)
     printf("Скорость набора : %.2f(сим/сек)\n", sym_in_min);
     printf("Ранг - ");
     print_rate(sym_in_min);
-}
-
-void print_less_cnt_sym()
-{
-    printf("\033[31m");
-    printf("\n\tОбнаружена ошибка!\nВведено меньше символов, чем в требуемой "
-           "строке\n");
-    printf("\033[37m");
 }
