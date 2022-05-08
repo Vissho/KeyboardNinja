@@ -1,7 +1,8 @@
-#include "kbn_print_banner.h"
+#include <keyboardninja/kbn_print_banner.h>
 
 void print_banner()
 {
+    printf("\033[31m");
     printf("\n__   __           _                         _ _   _ _       "
            "_\n| | / /          | |                       | | \\ | (_)     "
            "(_)      \n| |/ /  ___ _   _| |__   ___   __ _ _ __ __| |  \\| "
@@ -18,6 +19,7 @@ void print_banner()
            "            * Вас приветствует программа KeyboardNinja! *\n"
            "             *******************************************\n");
     printf("\n");
+    printf("\033[37m");
 }
 
 void print_lang()
@@ -79,8 +81,8 @@ int learn_coml()
         scanf(" %c", &p);
         if (isdigit(p)) {
             c = p - '0';
-            if (c != 1 && c != 2) {
-                printf("[E] Введен неизвестный язык! Повтор ввода");
+            if (c != 1 && c != 2 && c != 3) {
+                printf("[E] Введен неизвестная сложность! Повтор ввода");
                 continue;
             } else
                 return c;

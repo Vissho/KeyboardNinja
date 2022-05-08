@@ -1,38 +1,33 @@
+#include <keyboardninja/kbn_print_banner.h>
 #include <libkeyboardninja/kbn_analyz.h>
 #include <libkeyboardninja/kbn_read.h>
 #include <stdio.h>
+#include <string.h>
 
 int main()
 {
-    int cnt;
+    int true_flag = 1;
+    int lang, coml;
+    int cnt = 300;
     double time;
-    char** dict = read_dictionary(&cnt);
-    printf("keyboardninja\n");
-    char* spec_string = find_string(dict, 1, 1, cnt);
+
+    char** dict = read_dictionary(cnt);
+
+    print_banner();
+    learn_settings(&lang, &coml);
+
+    char* spec_string = find_string(dict, lang, coml, cnt);
     char* user_str = user_string(&time, spec_string);
-    printf("%s - %.2lf\n", user_str, time);
     int* analyz_print = analyz(spec_string, user_str, &cnt);
-    for (int i = 0; i < cnt; i++) {
-        if (analyz_print[i] == 1) {
-            if (user_str[i] == -48 || user_str[i] == -47) {
-                printf("\033[32m");
-                printf("%c", user_str[i]);
-                i++;
-                printf("%c", user_str[i]);
-            } else {
-                printf("\033[32m%c", user_str[i]);
-            }
-        } else {
-            if (user_str[i] == -48 || user_str[i] == -47) {
-                printf("\033[31m");
-                printf("%c", user_str[i]);
-                i++;
-                printf("%c", user_str[i]);
-            } else {
-                printf("\033[31m%c", user_str[i]);
-            }
-        }
+
+    size_t len = strlen(spec_string) - 1;
+    true_flag = correct_str(analyz_print, len);
+
+    if (true_flag == 1) {
+        correct_output(time, user_str, lang);
+    } else {
+        incorrect_output(user_str, spec_string, analyz_print, cnt - 1);
     }
+    printf("\033[37m");
     printf("\n");
-    return 0;
 }
