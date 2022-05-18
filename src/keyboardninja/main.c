@@ -1,4 +1,5 @@
 #include <keyboardninja/kbn_print_banner.h>
+#include <libkeyboardninja/colors_output.h>
 #include <libkeyboardninja/kbn_analyz.h>
 #include <libkeyboardninja/kbn_read.h>
 #include <stdio.h>
@@ -6,6 +7,8 @@
 
 int main()
 {
+    system("clear");
+
     int true_flag = 1;
     int lang, coml;
     int cnt = 300;
@@ -26,7 +29,8 @@ int main()
     if (true_flag == 1) {
         correct_output(time, user_str, lang);
     } else {
-        incorrect_output(user_str, spec_string, analyz_print, cnt - 1);
+        incorrect_output(
+                user_str, spec_string, analyz_print, cnt - 1, time, lang);
     }
     printf("\033[37m");
     printf("\n");

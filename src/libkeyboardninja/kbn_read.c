@@ -1,3 +1,4 @@
+#include <libkeyboardninja/colors_output.h>
 #include <libkeyboardninja/kbn_read.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -55,14 +56,14 @@ char** read_dictionary(int cnt)
 
 char* find_string(char** dict, int language, int complexity, int cnt)
 {
-    int start = 0, end = 0;
+    int start = 0, end = 0, lvls = 6;
 
     if (language == 1) {
-        start = cnt / 6 * (language * (complexity - 1));
-        end = cnt / 6 * (language * complexity) - 1;
+        start = cnt / lvls * (language * (complexity - 1));
+        end = cnt / lvls * (language * complexity) - 1;
     } else {
-        start = cnt / 6 * (language + complexity);
-        end = cnt / 6 * (language + complexity + 1) - 1;
+        start = cnt / lvls * (language + complexity);
+        end = cnt / lvls * (language + complexity + 1) - 1;
     }
 
     srand(time(NULL));
@@ -72,15 +73,15 @@ char* find_string(char** dict, int language, int complexity, int cnt)
 
 char* user_string(double* time, char* spec_string)
 {
-    int timercnt = 2;
+    int timercnt = 3;
     printf("\n%s", spec_string);
-    printf("\033[33m\n");
+    printf("%s\n", YELLOW);
     printf("\nНапиши строку выше через\n");
     for (int x = timercnt; x > 0; x--) {
         printf("%d\n", x);
         sleep(1);
     }
-    printf("\033[37m");
+    printf("%s", RESET);
     printf("Ввод ---> ");
     char* user_string = (char*)malloc(SIZE_STR * sizeof(char));
     printf(": ");
