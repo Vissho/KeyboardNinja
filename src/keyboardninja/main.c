@@ -34,4 +34,6 @@ int main()
     }
     printf("\033[37m");
     printf("\n");
+
+    free_all(user_str, analyz_print, dict);
 }
