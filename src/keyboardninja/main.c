@@ -11,7 +11,7 @@ int main()
 
     int true_flag = 1;
     int lang, coml;
-    int cnt = 300;
+    int cnt = SIZE_DICTIONARY;
     double time;
 
     char** dict = read_dictionary(cnt);
@@ -34,4 +34,6 @@ int main()
     }
     printf("\033[37m");
     printf("\n");
+
+    free_all(user_str, analyz_print, dict);
 }

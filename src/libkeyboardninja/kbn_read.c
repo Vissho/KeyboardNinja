@@ -44,9 +44,24 @@ char** read_dictionary(int cnt)
     }
 
     i = 0;
+    int size;
+    char check;
     fseek(fp, 0, SEEK_SET);
     while (!feof(fp)) {
-        fgets(dict[i], SIZE_STR, fp);
+        if (i == cnt - 1) {
+            fseek(fp, 0, SEEK_CUR);
+            fgets(dict[i], SIZE_STR, fp);
+            break;
+        }
+        size = 1;
+        for (fread(&check, 1, 1, fp);
+             check != '\n' && check != '\0' && !feof(fp);
+             fread(&check, 1, 1, fp)) {
+            size++;
+        }
+        fseek(fp, (-1) * (size), SEEK_CUR);
+        fread(dict[i], size, 1, fp);
+        dict[i][size] = '\0';
         i++;
     }
 
@@ -91,4 +106,20 @@ char* user_string(double* time, char* spec_string)
     time_user = wtime() - time_user;
     *time = time_user;
     return user_string;
+}
+
+int free_all(char* user_str, int* analyz_print, char** dict)
+{
+    int flag = 0;
+    for (int i = 0; i < SIZE_DICTIONARY; i++) {
+        free(dict[i]);
+        if ((dict[i]) == NULL)
+            flag = -1;
+    }
+    free(dict);
+    free(user_str);
+    free(analyz_print);
+    if (dict == NULL || user_str == NULL || analyz_print == NULL)
+        flag = -1;
+    return flag;
 }
