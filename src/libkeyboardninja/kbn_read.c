@@ -108,12 +108,18 @@ char* user_string(double* time, char* spec_string)
     return user_string;
 }
 
-void free_all(char* user_str, int* analyz_print, char** dict)
+int free_all(char* user_str, int* analyz_print, char** dict)
 {
+    int flag = 0;
     for (int i = 0; i < SIZE_DICTIONARY; i++) {
         free(dict[i]);
+        if ((dict[i]) == NULL)
+            flag = -1;
     }
     free(dict);
     free(user_str);
     free(analyz_print);
+    if (dict == NULL || user_str == NULL || analyz_print == NULL)
+        flag = -1;
+    return flag;
 }

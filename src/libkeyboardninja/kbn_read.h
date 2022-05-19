@@ -7,6 +7,6 @@
 char** read_dictionary(int cnt);
 char* find_string(char** dict, int language, int complexity, int cnt);
 char* user_string(double* time, char* spec_string);
-void free_all(char* user_str, int* analyz_print, char** dict);
+int free_all(char* user_str, int* analyz_print, char** dict);
 
 #endif // _KBN_READ_

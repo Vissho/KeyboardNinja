@@ -2,4 +2,5 @@
 *.d
 *.o
 bin/keyboardninja
+bin/test
 .vscode/
