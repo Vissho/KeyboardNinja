@@ -1,5 +1,6 @@
 #include <ctest.h>
 #include <stdio.h>
+#include <string.h>
 
 #include <keyboardninja/kbn_print_banner.h>
 #include <libkeyboardninja/colors_output.h>
@@ -34,4 +35,18 @@ CTEST(search_a_specified_string, correctly_search_a_specified_string)
     for (int i = 0; i < SIZE_DICTIONARY; i++)
         free(dictionary[i]);
     free(dictionary);
+}
+
+CTEST(full_memory_release, correctly_full_memory_release)
+{
+    int size = SIZE_DICTIONARY;
+    char** dictionary = read_dictionary(SIZE_DICTIONARY);
+    char* spec_string = find_string(dictionary, 2, 2, SIZE_DICTIONARY);
+    char* user_str = (char*)malloc(SIZE_STR * sizeof(char));
+    strcpy(user_str, "Any other text");
+    int* analyz_print = analyz(spec_string, user_str, &size);
+
+    int flag = free_all(user_str, analyz_print, dictionary);
+
+    ASSERT_FALSE(flag);
 }
