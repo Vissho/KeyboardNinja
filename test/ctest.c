@@ -50,3 +50,34 @@ CTEST(full_memory_release, correctly_full_memory_release)
 
     ASSERT_FALSE(flag);
 }
+
+CTEST(symbols_in_min, correctly_symbols_in_min)
+{
+    float expect_sim = 240;
+    char* string = "mask on !@#$)^& mask off";
+    double time = 6;
+    int lang = 2;
+    float sim = symbols_in_min(string, time, lang);
+    ASSERT_EQUAL(expect_sim, sim);
+}
+
+CTEST(canalyz, correctly_correct_analyz)
+{
+    int size = 1;
+    char* str1 = "inputoutput";
+    char* str2 = "inputoutput";
+    int* expect = malloc(strlen(str1) * sizeof(int));
+    for (size_t x = 0; x < strlen(str1); x++)
+        expect[x] = 1;
+    int* getted = analyz(str1, str2, &size);
+    ASSERT_EQUAL(*expect, *getted);
+}
+
+CTEST(correct_str, sorrectly_correct_str)
+{
+    int* arr = malloc(5 * sizeof(int));
+    for (int x = 0; x < 5; x++)
+        arr[x] = 1;
+    int correct_flag = correct_str(arr, 5);
+    ASSERT_TRUE(correct_flag);
+}
