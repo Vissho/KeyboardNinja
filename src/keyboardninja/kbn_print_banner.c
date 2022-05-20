@@ -39,13 +39,6 @@ void print_coml()
            "                    3 - Сложный\n");
 }
 
-char get()
-{
-    char c;
-    scanf("%c", &c);
-    return c;
-}
-
 int learn_lang()
 {
     char p;
