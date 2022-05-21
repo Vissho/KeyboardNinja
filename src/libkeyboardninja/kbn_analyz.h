@@ -1,7 +1,5 @@
-#ifndef _KBN_ANALYZ_
-#define _KBN_ANALYZ_
-
 #include <stddef.h>
+#pragma once
 
 #define RU_UPPER_CASE -48
 #define RU_LOWER_CASE -47
@@ -18,6 +16,3 @@ void incorrect_output(
         double time,
         int lang);
 void correct_output(double time, char* user_str, int lang);
-//
-
-#endif // _KBN_ANALYZ_

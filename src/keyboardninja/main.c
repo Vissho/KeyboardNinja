@@ -19,7 +19,7 @@ int main()
     print_banner();
     learn_settings(&lang, &coml);
 
-    char* spec_string = find_string(dict, lang, coml, cnt);
+    char* spec_string = specified_string(dict, lang, coml, cnt);
     char* user_str = user_string(&time, spec_string);
     int* analyz_print = analyz(spec_string, user_str, &cnt);
 
