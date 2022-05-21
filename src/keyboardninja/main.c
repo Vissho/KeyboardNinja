@@ -19,7 +19,7 @@ int main()
     print_banner();
     learn_settings(&lang, &coml);
 
-    char* spec_string = find_string(dict, lang, coml, cnt);
+    char* spec_string = specified_string(dict, lang, coml, cnt);
     char* user_str = user_string(&time, spec_string);
     int* analyz_print = analyz(spec_string, user_str, &cnt);
 
@@ -27,10 +27,9 @@ int main()
     true_flag = correct_str(analyz_print, len);
 
     if (true_flag == 1) {
-        correct_output(time, user_str, lang);
+        correct_output(time, user_str);
     } else {
-        incorrect_output(
-                user_str, spec_string, analyz_print, cnt - 1, time, lang);
+        incorrect_output(user_str, spec_string, analyz_print, cnt - 1, time);
     }
     printf("\033[37m");
     printf("\n");

@@ -4,20 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-enum {
-    NOT_CONFIDENT = 50,
-    MASTERED = 100,
-    BEGINNER = 150,
-    DEFAULT_USER = 200,
-    CONFIDENT_USER = 250,
-    ADVANCED_USER = 300,
-    TYPER = 350,
-    EXP_TYPER = 400,
-    TYPE_MACHINE = 450,
-    ROBOT = 500,
-    CYBERPSICHO = 550
-} lvls_skill_user;
-
 int* analyz(char* spec_string, char* user_string, int* size)
 {
     int i = 0, user_cnt = strlen(user_string), spec_cnt = 1, cnt = 1;
@@ -58,40 +44,67 @@ int* analyz(char* spec_string, char* user_string, int* size)
     return analyz;
 }
 
-float symbols_in_min(char* user_str, float time, int lang)
+float symbols_in_min(char* user_str, float time)
 {
+    int cnt_sym = 0;
+    int i = 0;
     int sec_in_min = 60;
-    int len = strlen(user_str);
-    if (lang == 1)
-        len /= 2;
-    float sim = (len * sec_in_min) / time;
+    while (user_str[i] != '\0') {
+        if (user_str[i] == RU_UPPER_CASE || user_str[i] == RU_LOWER_CASE)
+            i += 2;
+        else
+            i++;
+        cnt_sym++;
+    }
+    float sim = (cnt_sym * sec_in_min) / time;
     return sim;
 }
 
 void print_rate(float sym_in_min)
 {
-    if (sym_in_min <= NOT_CONFIDENT)
-        printf("Неуверенный\n");
-    else if (sym_in_min > NOT_CONFIDENT && sym_in_min <= MASTERED)
-        printf("Осваивающийся\n");
-    else if (sym_in_min > MASTERED && sym_in_min <= BEGINNER)
-        printf("Начинающий\n");
-    else if (sym_in_min > BEGINNER && sym_in_min <= DEFAULT_USER)
-        printf("Дефолтный пользователь\n");
-    else if (sym_in_min > DEFAULT_USER && sym_in_min <= ADVANCED_USER)
-        printf("Уверенный пользователь\n");
-    else if (sym_in_min > ADVANCED_USER && sym_in_min <= TYPER)
-        printf("Продвинутый пользователь\n");
-    else if (sym_in_min > TYPER && sym_in_min <= EXP_TYPER)
-        printf("Наборщик\n");
-    else if (sym_in_min > EXP_TYPER && sym_in_min <= TYPE_MACHINE)
-        printf("Наборщик со стажем\n");
-    else if (sym_in_min > TYPE_MACHINE && sym_in_min <= ROBOT)
-        printf("Печатная машинка\n");
-    else if (sym_in_min > ROBOT && sym_in_min <= CYBERPSICHO)
-        printf("Робот\n");
-    else if (sym_in_min > CYBERPSICHO)
-        printf("КИБЕРПСИХ\n");
+    int cnt_lvls = 11;
+    int cnt_min_diff = 50;
+    int* lvls_user_speed = calloc(cnt_lvls, sizeof(int));
+
+    for (int x = 0; x < cnt_lvls; x++) {
+        lvls_user_speed[x] += cnt_min_diff;
+        cnt_min_diff += 50;
+    }
+
+    char lvls_skill_user[][50]
+            = {"Осваивающийся",
+               "Практикующийся",
+               "Начинающий",
+               "Дефолтный пользователь",
+               "Умелый пользователь",
+               "Продвинутый пользователь",
+               "Наборщик",
+               "Наборщик со стажем",
+               "Печатная машинка",
+               "Робот",
+               "Киберпсих"};
+
+    struct rank* arr_ranks[cnt_lvls];
+    for (int x = 0; x < cnt_lvls; x++)
+        arr_ranks[x] = malloc(sizeof(arr_ranks));
+
+    for (int x = 0; x < cnt_lvls; x++) {
+        arr_ranks[x]->key = lvls_skill_user[x];
+        arr_ranks[x]->value = lvls_user_speed[x];
+    }
+
+    if (sym_in_min > arr_ranks[cnt_lvls - 1]->value)
+        printf("%s", arr_ranks[cnt_lvls - 1]->key);
+    else {
+        for (int x = 0; x < cnt_lvls; x++)
+            if (sym_in_min < arr_ranks[x]->value) {
+                printf("%s", arr_ranks[x]->key);
+                break;
+            }
+    }
+    free(lvls_user_speed);
+    for (int x = 0; x < cnt_lvls; x++)
+        free(arr_ranks[x]);
 }
 
 int correct_str(int* arr, size_t len)
@@ -108,8 +121,7 @@ void incorrect_output(
         char* spec_string,
         int* analyz_print,
         int cnt,
-        double time,
-        int lang)
+        double time)
 {
     printf("%s", YELLOW);
     printf("\n\t***Строка была введена неверно!***\n\t     Ошибки "
@@ -160,7 +172,7 @@ void incorrect_output(
     printf("\n\tАнализ представлен  "
            "ниже\n");
     printf("Время, за которое была введена строка: %0.2f\n", time);
-    float sym_in_min = symbols_in_min(user_str, time, lang);
+    float sym_in_min = symbols_in_min(user_str, time);
     printf("Скорость набора : %.2f(сим/сек)\n", sym_in_min);
     printf("Ранг - ");
     print_rate(sym_in_min);
@@ -168,13 +180,13 @@ void incorrect_output(
     printf("\n\nНеплохой результат, ждём Вас снова!\n\n");
 }
 
-void correct_output(double time, char* user_str, int lang)
+void correct_output(double time, char* user_str)
 {
     printf("%s", WHITE);
     printf("\n\t***Строка была введена верно***\n\tАнализ представлен  "
            "ниже\n");
     printf("Время, за которое была введена строка: %0.2f\n", time);
-    float sym_in_min = symbols_in_min(user_str, time, lang);
+    float sym_in_min = symbols_in_min(user_str, time);
     printf("Скорость набора : %.2f(сим/сек)\n", sym_in_min);
     printf("Ранг - ");
     print_rate(sym_in_min);

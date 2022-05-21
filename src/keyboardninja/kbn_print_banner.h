@@ -1,7 +1,8 @@
+#pragma once
+#include <assert.h>
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
-#pragma once
 
 void print_banner();
 int learn_settings(int* lang, int* complexity);

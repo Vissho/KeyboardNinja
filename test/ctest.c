@@ -27,7 +27,7 @@ CTEST(search_a_specified_string, correctly_search_a_specified_string)
     const int max_language = 2, max_complexity = 3;
     for (int i = 1; i <= max_language; i++) {
         for (int j = 1; j <= max_complexity; j++) {
-            spec_string = find_string(dictionary, i, j, SIZE_DICTIONARY);
+            spec_string = specified_string(dictionary, i, j, SIZE_DICTIONARY);
             ASSERT_NOT_NULL(spec_string);
         }
     }
@@ -41,14 +41,16 @@ CTEST(full_memory_release, correctly_full_memory_release)
 {
     int size = SIZE_DICTIONARY;
     char** dictionary = read_dictionary(SIZE_DICTIONARY);
-    char* spec_string = find_string(dictionary, 2, 2, SIZE_DICTIONARY);
+    char* spec_string = specified_string(dictionary, 2, 2, SIZE_DICTIONARY);
     char* user_str = (char*)malloc(SIZE_STR * sizeof(char));
     strcpy(user_str, "Any other text");
     int* analyz_print = analyz(spec_string, user_str, &size);
 
-    int flag = free_all(user_str, analyz_print, dictionary);
+    free_all(user_str, analyz_print, dictionary);
 
-    ASSERT_FALSE(flag);
+    ASSERT_NOT_NULL(user_str);
+    ASSERT_NOT_NULL(analyz_print);
+    ASSERT_NOT_NULL(dictionary);
 }
 
 CTEST(symbols_in_min, correctly_symbols_in_min)
@@ -56,8 +58,7 @@ CTEST(symbols_in_min, correctly_symbols_in_min)
     float expect_sim = 240;
     char* string = "mask on !@#$)^& mask off";
     double time = 6;
-    int lang = 2;
-    float sim = symbols_in_min(string, time, lang);
+    float sim = symbols_in_min(string, time);
     ASSERT_EQUAL(expect_sim, sim);
 }
 
@@ -71,6 +72,9 @@ CTEST(canalyz, correctly_correct_analyz)
         expect[x] = 1;
     int* getted = analyz(str1, str2, &size);
     ASSERT_EQUAL(*expect, *getted);
+
+    free(expect);
+    free(getted);
 }
 
 CTEST(correct_str, sorrectly_correct_str)
@@ -80,4 +84,6 @@ CTEST(correct_str, sorrectly_correct_str)
         arr[x] = 1;
     int correct_flag = correct_str(arr, 5);
     ASSERT_TRUE(correct_flag);
+
+    free(arr);
 }
