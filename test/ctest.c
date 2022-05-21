@@ -87,3 +87,11 @@ CTEST(correct_str, sorrectly_correct_str)
 
     free(arr);
 }
+
+CTEST(rank, correct_rank)
+{
+    int exp_rank = 6;
+    float sim = 325;
+    int getted_rank = calculate_rate(sim);
+    ASSERT_EQUAL(getted_rank, exp_rank);
+}

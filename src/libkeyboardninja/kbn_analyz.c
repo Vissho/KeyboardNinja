@@ -4,6 +4,19 @@
 #include <stdlib.h>
 #include <string.h>
 
+char* lvls_skill_user[]
+        = {"Осваивающийся",
+           "Практикующийся",
+           "Начинающий",
+           "Дефолтный пользователь",
+           "Умелый пользователь",
+           "Продвинутый пользователь",
+           "Наборщик",
+           "Наборщик со стажем",
+           "Печатная машинка",
+           "Робот",
+           "Киберпсих"};
+
 int* analyz(char* spec_string, char* user_string, int* size)
 {
     int i = 0, user_cnt = strlen(user_string), spec_cnt = 1, cnt = 1;
@@ -60,7 +73,7 @@ float symbols_in_min(char* user_str, float time)
     return sim;
 }
 
-void print_rate(float sym_in_min)
+int calculate_rate(float sym_in_min)
 {
     int cnt_lvls = 11;
     int cnt_min_diff = 50;
@@ -71,40 +84,18 @@ void print_rate(float sym_in_min)
         cnt_min_diff += 50;
     }
 
-    char lvls_skill_user[][50]
-            = {"Осваивающийся",
-               "Практикующийся",
-               "Начинающий",
-               "Дефолтный пользователь",
-               "Умелый пользователь",
-               "Продвинутый пользователь",
-               "Наборщик",
-               "Наборщик со стажем",
-               "Печатная машинка",
-               "Робот",
-               "Киберпсих"};
-
-    struct rank* arr_ranks[cnt_lvls];
-    for (int x = 0; x < cnt_lvls; x++)
-        arr_ranks[x] = malloc(sizeof(arr_ranks));
+    struct rank arr_ranks[cnt_lvls];
 
     for (int x = 0; x < cnt_lvls; x++) {
-        arr_ranks[x]->key = lvls_skill_user[x];
-        arr_ranks[x]->value = lvls_user_speed[x];
+        arr_ranks[x].key = lvls_skill_user[x];
+        arr_ranks[x].value = lvls_user_speed[x];
     }
 
-    if (sym_in_min > arr_ranks[cnt_lvls - 1]->value)
-        printf("%s", arr_ranks[cnt_lvls - 1]->key);
-    else {
-        for (int x = 0; x < cnt_lvls; x++)
-            if (sym_in_min < arr_ranks[x]->value) {
-                printf("%s", arr_ranks[x]->key);
-                break;
-            }
+    for (int x = 0; x < cnt_lvls; x++) {
+        if (sym_in_min < arr_ranks[x].value)
+            return x;
     }
-    free(lvls_user_speed);
-    for (int x = 0; x < cnt_lvls; x++)
-        free(arr_ranks[x]);
+    return 10;
 }
 
 int correct_str(int* arr, size_t len)
@@ -173,9 +164,9 @@ void incorrect_output(
            "ниже\n");
     printf("Время, за которое была введена строка: %0.2f\n", time);
     float sym_in_min = symbols_in_min(user_str, time);
+    int rank = calculate_rate(sym_in_min);
     printf("Скорость набора : %.2f(сим/сек)\n", sym_in_min);
-    printf("Ранг - ");
-    print_rate(sym_in_min);
+    printf("Ранг - %s\n", lvls_skill_user[rank]);
     printf("%s", GREEN);
     printf("\n\nНеплохой результат, ждём Вас снова!\n\n");
 }
@@ -188,8 +179,8 @@ void correct_output(double time, char* user_str)
     printf("Время, за которое была введена строка: %0.2f\n", time);
     float sym_in_min = symbols_in_min(user_str, time);
     printf("Скорость набора : %.2f(сим/сек)\n", sym_in_min);
-    printf("Ранг - ");
-    print_rate(sym_in_min);
+    int rank = calculate_rate(sym_in_min);
+    printf("Ранг - %s\n", lvls_skill_user[rank]);
     printf("%s", GREEN);
     printf("\n\nНеплохой результат, ждём Вас снова!\n\n");
 }
