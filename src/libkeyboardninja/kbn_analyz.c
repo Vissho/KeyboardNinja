@@ -91,6 +91,8 @@ int calculate_rate(float sym_in_min)
         arr_ranks[x].value = lvls_user_speed[x];
     }
 
+    free(lvls_user_speed);
+
     for (int x = 0; x < cnt_lvls; x++) {
         if (sym_in_min < arr_ranks[x].value)
             return x;
