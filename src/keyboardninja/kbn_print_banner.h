@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 void print_banner();
 int learn_settings(int* lang, int* complexity);

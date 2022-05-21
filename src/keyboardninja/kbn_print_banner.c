@@ -41,22 +41,26 @@ void print_coml()
 
 int learn_lang()
 {
-    char p;
+    char* p = malloc(10 * sizeof(char));
     while (1) {
         printf(": ");
-        scanf(" %c", &p);
-        if (p == '1' || p == '2') {
-            return p - '0';
-        }
-        if (isdigit(p)) {
-            printf("[E] Введен неизвестный язык! Повтор ввода");
-            continue;
-        }
-        if (p == 'q') {
-            printf("[E] Выход из программы...");
-            return -1;
-        }
-        printf("[E] Введен неизвестный символ! Повтор ввода");
+        fgets(p, 10, stdin);
+        if (strlen(p) == 2) {
+            if (p[0] == '1' || p[0] == '2') {
+                return p[0] - '0';
+            }
+            if (isdigit(p[0])) {
+                printf("[E] Введен неизвестный язык! Повтор ввода");
+                continue;
+            }
+            if (p[0] == 'q') {
+                free(p);
+                printf("[E] Выход из программы...");
+                return -1;
+            }
+            printf("[E] Введен неизвестный символ! Повтор ввода");
+        } else
+            printf("[E] Введен неизвестный символ! Повтор ввода");
     }
     assert(0 && "Unreachable");
     return -1;
@@ -64,22 +68,26 @@ int learn_lang()
 
 int learn_coml()
 {
-    char p;
+    char* p = malloc(10 * sizeof(char));
     while (1) {
         printf(": ");
-        scanf(" %c", &p);
-        if (p == '1' || p == '2' || p == '3') {
-            return p - '0';
-        }
-        if (isdigit(p)) {
-            printf("[E] Введена неизвестная сложность! Повтор ввода");
-            continue;
-        }
-        if (p == 'q') {
-            printf("[E] Выход из программы...");
-            return -1;
-        }
-        printf("[E] Введен неизвестный символ! Повтор ввода");
+        fgets(p, 10, stdin);
+        if (strlen(p) == 2) {
+            if (p[0] == '1' || p[0] == '2' || p[0] == '3') {
+                return p[0] - '0';
+            }
+            if (isdigit(p[0])) {
+                printf("[E] Введен неизвестная сложность! Повтор ввода");
+                continue;
+            }
+            if (p[0] == 'q') {
+                free(p);
+                printf("[E] Выход из программы...");
+                return -1;
+            }
+            printf("[E] Введен неизвестный символ! Повтор ввода");
+        } else
+            printf("[E] Введен неизвестный символ! Повтор ввода");
     }
     assert(0 && "Unreachable");
     return -1;
