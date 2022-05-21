@@ -7,29 +7,16 @@
 #include <time.h>
 #include <unistd.h>
 
-double wtime()
+static double wtime()
 {
     struct timeval t;
     gettimeofday(&t, NULL);
     return (double)t.tv_sec + (double)t.tv_usec * 1E-6;
 }
 
-int getrand(int min, int max)
+static int getrand(int min, int max)
 {
     return (double)rand() / (RAND_MAX + 1.0) * (max - min) + min;
-}
-
-int read_cnt()
-{
-    int cnt = 0;
-    FILE* fp;
-    fp = fopen("dictionary.txt", "r");
-    while (!feof(fp)) {
-        fscanf(fp, "%*[^\n]%*c");
-        cnt++;
-    }
-    fclose(fp);
-    return cnt;
 }
 
 char** read_dictionary(int cnt)
@@ -38,30 +25,19 @@ char** read_dictionary(int cnt)
     FILE* fp;
     fp = fopen("dictionary.txt", "r");
 
+    if (fp == NULL) {
+        printf("Программа не смогла найти заданный файл!\n");
+        exit(-1);
+    }
+
     char** dict = (char**)malloc(cnt * sizeof(char*));
     for (i = 0; i < cnt; i++) {
         dict[i] = (char*)malloc(SIZE_STR * sizeof(char));
     }
 
     i = 0;
-    int size;
-    char check;
-    fseek(fp, 0, SEEK_SET);
     while (!feof(fp)) {
-        if (i == cnt - 1) {
-            fseek(fp, 0, SEEK_CUR);
-            fgets(dict[i], SIZE_STR, fp);
-            break;
-        }
-        size = 1;
-        for (fread(&check, 1, 1, fp);
-             check != '\n' && check != '\0' && !feof(fp);
-             fread(&check, 1, 1, fp)) {
-            size++;
-        }
-        fseek(fp, (-1) * (size), SEEK_CUR);
-        fread(dict[i], size, 1, fp);
-        dict[i][size] = '\0';
+        fgets(dict[i], SIZE_STR, fp);
         i++;
     }
 
@@ -69,7 +45,7 @@ char** read_dictionary(int cnt)
     return dict;
 }
 
-char* find_string(char** dict, int language, int complexity, int cnt)
+char* specified_string(char** dict, int language, int complexity, int cnt)
 {
     int start = 0, end = 0, lvls = 6;
 
@@ -108,18 +84,12 @@ char* user_string(double* time, char* spec_string)
     return user_string;
 }
 
-int free_all(char* user_str, int* analyz_print, char** dict)
+void free_all(char* user_str, int* analyz_print, char** dict)
 {
-    int flag = 0;
     for (int i = 0; i < SIZE_DICTIONARY; i++) {
         free(dict[i]);
-        if ((dict[i]) == NULL)
-            flag = -1;
     }
     free(dict);
     free(user_str);
     free(analyz_print);
-    if (dict == NULL || user_str == NULL || analyz_print == NULL)
-        flag = -1;
-    return flag;
 }
