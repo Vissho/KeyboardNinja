@@ -58,8 +58,7 @@ CTEST(symbols_in_min, correctly_symbols_in_min)
     float expect_sim = 240;
     char* string = "mask on !@#$)^& mask off";
     double time = 6;
-    int lang = 2;
-    float sim = symbols_in_min(string, time, lang);
+    float sim = symbols_in_min(string, time);
     ASSERT_EQUAL(expect_sim, sim);
 }
 

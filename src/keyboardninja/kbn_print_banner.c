@@ -42,52 +42,46 @@ void print_coml()
 int learn_lang()
 {
     char p;
-    int c = 0;
     while (1) {
         printf(": ");
         scanf(" %c", &p);
+        if (p == '1' || p == '2') {
+            return p - '0';
+        }
         if (isdigit(p)) {
-            c = p - '0';
-            if (c != 1 && c != 2) {
-                printf("[E] Введен неизвестный язык! Повтор ввода");
-                continue;
-            } else
-                return c;
-        } else if (p == 'q') {
-            printf("[E] Выход из программы...");
-            return -1;
-        } else {
-            printf("[E] Введен неизвестный символ! Повтор ввода");
+            printf("[E] Введен неизвестный язык! Повтор ввода");
             continue;
         }
+        if (p == 'q') {
+            printf("[E] Выход из программы...");
+            return -1;
+        }
+        printf("[E] Введен неизвестный символ! Повтор ввода");
     }
-    printf("[E] Выход из программы...");
+    assert(0 && "Unreachable");
     return -1;
 }
 
 int learn_coml()
 {
     char p;
-    int c = 0;
     while (1) {
         printf(": ");
         scanf(" %c", &p);
+        if (p == '1' || p == '2' || p == '3') {
+            return p - '0';
+        }
         if (isdigit(p)) {
-            c = p - '0';
-            if (c != 1 && c != 2 && c != 3) {
-                printf("[E] Введен неизвестная сложность! Повтор ввода");
-                continue;
-            } else
-                return c;
-        } else if (p == 'q') {
-            printf("[E] Выход из программы...");
-            return -1;
-        } else {
-            printf("[E] Введен неизвестный символ! Повтор ввода");
+            printf("[E] Введена неизвестная сложность! Повтор ввода");
             continue;
         }
+        if (p == 'q') {
+            printf("[E] Выход из программы...");
+            return -1;
+        }
+        printf("[E] Введен неизвестный символ! Повтор ввода");
     }
-    printf("[E] Выход из программы...");
+    assert(0 && "Unreachable");
     return -1;
 }
 
