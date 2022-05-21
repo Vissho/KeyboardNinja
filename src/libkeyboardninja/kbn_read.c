@@ -77,7 +77,6 @@ char* user_string(double* time, char* spec_string)
     char* user_string = (char*)malloc(SIZE_STR * sizeof(char));
     printf(": ");
     double time_user = wtime();
-    stdin->_IO_read_ptr = stdin->_IO_read_end;
     fgets(user_string, SIZE_STR, stdin);
     time_user = wtime() - time_user;
     *time = time_user;
