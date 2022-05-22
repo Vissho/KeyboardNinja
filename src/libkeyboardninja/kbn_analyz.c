@@ -167,7 +167,7 @@ void incorrect_output(
     printf("Время, за которое была введена строка: %0.2f\n", time);
     float sym_in_min = symbols_in_min(user_str, time);
     int rank = calculate_rate(sym_in_min);
-    printf("Скорость набора : %.2f(сим/сек)\n", sym_in_min);
+    printf("Скорость набора : %.2f(сим/мин)\n", sym_in_min);
     printf("Ранг - %s\n", lvls_skill_user[rank]);
     printf("%s", GREEN);
     printf("\n\nНеплохой результат, ждём Вас снова!\n\n");
@@ -180,7 +180,7 @@ void correct_output(double time, char* user_str)
            "ниже\n");
     printf("Время, за которое была введена строка: %0.2f\n", time);
     float sym_in_min = symbols_in_min(user_str, time);
-    printf("Скорость набора : %.2f(сим/сек)\n", sym_in_min);
+    printf("Скорость набора : %.2f(сим/мин)\n", sym_in_min);
     int rank = calculate_rate(sym_in_min);
     printf("Ранг - %s\n", lvls_skill_user[rank]);
     printf("%s", GREEN);
