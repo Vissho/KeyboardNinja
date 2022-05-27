@@ -1,6 +1,6 @@
-#include <keyboardninja/kbn_print_banner.h>
 #include <assert.h>
 #include <ctype.h>
+#include <keyboardninja/kbn_print_banner.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
