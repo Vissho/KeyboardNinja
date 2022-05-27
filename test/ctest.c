@@ -1,6 +1,7 @@
 #include <ctest.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include <keyboardninja/kbn_print_banner.h>
 #include <libkeyboardninja/colors_output.h>

@@ -1,13 +1,13 @@
 #pragma once
 #include <stddef.h>
 
+#define RU_UPPER_CASE -48
+#define RU_LOWER_CASE -47
+
 struct rank {
     char* key;
     int value;
 };
-
-#define RU_UPPER_CASE -48
-#define RU_LOWER_CASE -47
 
 int* analyz(char* spec_string, char* user_string, int* size);
 float symbols_in_min(char* user_str, float time);
